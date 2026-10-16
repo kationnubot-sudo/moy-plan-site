@@ -119,7 +119,7 @@
 <div class="modal" id="importModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Импорт ежедневного плана</h2><button class="ico" data-close="importModal">✕</button></div><div class="form"><div class="note">Отправь ChatGPT запрос из кнопки «Скопировать запрос», затем вставь сюда JSON из ответа. Поддерживается один день или несколько дней.</div><label for="importJson">JSON-план</label><textarea id="importJson" style="min-height:205px" spellcheck="false" placeholder='{"date":"2026-10-19","tasks":[{"block":"Медицина","section":"Общая медицина","title":"Псориаз: патогенез и диагностика","minutes":120,"startTime":"18:00","details":"Разобрать и решить 3 задачи"}]}'></textarea><label style="display:flex;gap:8px;align-items:center;font-weight:500"><input id="replaceDateTasks" type="checkbox" style="width:auto"/> Заменить существующие задания для импортированных дат (включая отметки выполнения)</label><div class="modalbuttons"><button class="btn" data-close="importModal">Отмена</button><button class="btn primary" id="importJsonBtn">Импортировать план</button></div></div></div></div>
 <div class="modal" id="reviewTopicModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Добавить изученную тему</h2><button class="ico" data-close="reviewTopicModal" aria-label="Закрыть">✕</button></div><form id="reviewTopicForm" class="form"><div><label for="reviewTopicTitle">Название темы</label><input id="reviewTopicTitle" placeholder="Например, Клапаны сердца" maxlength="180" required/></div><div class="twocol"><div><label for="reviewTopicDate">Когда изучена</label><input id="reviewTopicDate" type="date" required /></div><div><label for="reviewTopicBlock">Блок</label><select id="reviewTopicBlock"></select></div></div><div><label for="reviewTopicSection">Раздел (необязательно)</label><input id="reviewTopicSection" placeholder="Например, Анатомия сердца" maxlength="100"/></div><div class="note">Будут созданы семь повторений от даты изучения. Если срок уже прошёл, проверка будет отмечена как просроченная, пока ты её не выполнишь.</div><div class="modalbuttons"><button type="button" class="btn" data-close="reviewTopicModal">Отмена</button><button class="btn primary" type="submit">Создать повторения</button></div></form></div></div>
 <div class="toast" id="toast"></div>
-<script src="./derm-plan.js"></script>
+<script src="./derm-plan.js?v=20261017-3"></script>
 <script>
 'use strict';
 const START='2026-10-16',END='2026-11-15',COURSE_END='2027-04-13',KEY='planner_v3_2026',DOW=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
@@ -312,19 +312,26 @@ function digestPrompt(){return `Подготовь контент для мое�
 
 function load(){try{const obj=JSON.parse(localStorage.getItem(KEY));if(obj&&Array.isArray(obj.tasks)&&Array.isArray(obj.grades))return {...obj,version:6,digests:obj.digests&&typeof obj.digests==='object'?obj.digests:{},digestQuizAnswers:obj.digestQuizAnswers&&typeof obj.digestQuizAnswers==='object'?obj.digestQuizAnswers:{},reviews:Array.isArray(obj.reviews)?obj.reviews:[],dayNotes:obj.dayNotes&&typeof obj.dayNotes==='object'?obj.dayNotes:{},settings:{reminderTime:'09:00',...(obj.settings||{})},notifications:obj.notifications||{},reviewDeletedSources:Array.isArray(obj.reviewDeletedSources)?obj.reviewDeletedSources:[]}}catch(e){}return defaultState()}
 function reconcileDermDailyTasks(){
- const version='derm-v2-2026';
- if(state.dermDailyVersion===version)return;
+ const version='derm-v3-2026';
+ if(!window.DERM_DAILY_PLAN||!window.DERM_DAILY_PLAN.length)return false;
+ const oldCount=state.tasks.length;
  const old=state.tasks.filter(t=>t.source==='assistant-derm-full-2026-10'||String(t.id||'').startsWith('derm-full-2026-'));
  const oldDone=new Set(old.filter(t=>t.done).map(t=>t.title.toLowerCase().trim()));
- const oldGeneric=t=>t.block==='Медицина'&&t.date>='2026-10-17'&&t.date<='2026-11-10'&&t.section==='Общая медицина и USMLE'&&(/^(USMLE:|Проверка USMLE)/.test(t.title)||t.title.includes('Дерматолог')||t.title.includes('Дерматовенеролог'));
- state.tasks=state.tasks.filter(t=>!old.includes(t)&&!oldGeneric(t));
+ const obsolete=t=>t.block==='Медицина'&&t.date>='2026-10-17'&&t.date<='2026-11-10'&&(
+   t.source==='assistant-derm-full-2026-10'||String(t.id||'').startsWith('derm-full-2026-')||
+   (t.section==='Общая медицина и USMLE'&&(/^(USMLE:|Проверка USMLE)/.test(t.title)||/дерматолог|дерматовенеролог|кожа/i.test(t.title)))
+ );
+ state.tasks=state.tasks.filter(t=>!obsolete(t));
  const existing=new Set(state.tasks.map(t=>t.id));
- for(const entry of DERM_DETAILED){if(existing.has(entry.id))continue;const t=task(entry.date,entry.block,entry.section,entry.title,entry.minutes,entry.details,entry.priority);t.id=entry.id;t.source=entry.source;t.done=oldDone.has(entry.title.toLowerCase().trim());state.tasks.push(t)}
+ let added=0;
+ for(const entry of DERM_DETAILED){if(existing.has(entry.id))continue;const t=task(entry.date,entry.block,entry.section,entry.title,entry.minutes,entry.details,entry.priority);t.id=entry.id;t.source=entry.source;t.done=oldDone.has(entry.title.toLowerCase().trim());state.tasks.push(t);added++}
+ const changed=added>0||oldCount!==state.tasks.length||state.dermDailyVersion!==version;
  state.dermDailyVersion=version;
+ return changed;
 }
-let state=load();reconcileDermDailyTasks();let selected=(iso(new Date())>=START&&iso(new Date())<=END)?iso(new Date()):START;let view='today';let monthCursor=selected.slice(0,7);let editId=null;let modalOpen=false;
+let state=load();const dermDailyChanged=reconcileDermDailyTasks();let selected=(iso(new Date())>=START&&iso(new Date())<=END)?iso(new Date()):START;let view='today';let monthCursor=selected.slice(0,7);let editId=null;let modalOpen=false;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));if(typeof window.queueCloudSave==='function')window.queueCloudSave()}catch(e){notify('Не удалось сохранить: возможно, браузер ограничивает хранилище')}};
-if(!localStorage.getItem(KEY))save();
+if(!localStorage.getItem(KEY)||dermDailyChanged)save();
 function ensureDay(date){if(state.tasks.some(t=>t.date===date))return;if(date>=START&&date<=END)return;const d=parseDate(date),w=d.getDay();state.tasks.push(task(date,'Искусство речи','Русская речь','Русская речь — 15 минут',15,'Монолог, активный словарь, разбор ошибок'));state.tasks.push(task(date,'Физическая форма','Гимнастика','Утренняя гимнастика + гибкость + шпагат',15,'Один ежедневный комплекс'));state.tasks.push(task(date,'Физическая форма','Активность','7 000+ шагов (ориентир)',0,'Посильная ходьба'));state.tasks.push(task(date,'Шахматы','Практика','Шахматные задачи — 10 минут',10,'Тактические задачи и повторение'));state.tasks.push(task(date,'Кругозор','Ежедневная задача','Кругозор за 5 минут',5,'По существующей ежедневной задаче'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Английский','General English','Английский — занятие по текущему плану',[5,6].includes(w)?60:30,'Заполнить по очередному месячному плану'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Медицина','Общая медицина и USMLE','Медицина — тема по плану',120,'Тему уточнить после получения материалов'));if([2,4,6].includes(w))state.tasks.push(task(date,'Медицина','Сердечно-сосудистая хирургия','ССХ — тема по плану',120,'Подставить следующую главу программы'));if([0,1].includes(w))state.tasks.push(task(date,'Искусство речи','Чеченский язык','Чеченский — занятие по тексту',30,'Чтение и пересказ'));if([3,5].includes(w))state.tasks.push(task(date,'Шахматы','Основное занятие','Шахматы — основное занятие',30,'Тема по текущему этапу'));save()}
 const byDate=s=>state.tasks.filter(t=>t.date===s);
 const percent=(a)=>a.length?Math.round(100*a.filter(t=>t.done).length/a.length):0;
