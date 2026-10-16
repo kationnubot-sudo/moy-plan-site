@@ -330,7 +330,19 @@ function reconcileDermDailyTasks(){
  return changed;
 }
 let state=load();const dermDailyChanged=reconcileDermDailyTasks();let selected=(iso(new Date())>=START&&iso(new Date())<=END)?iso(new Date()):START;let view='today';let monthCursor=selected.slice(0,7);let editId=null;let modalOpen=false;
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));if(typeof window.queueCloudSave==='function')window.queueCloudSave()}catch(e){notify('Не удалось сохранить: возможно, браузер ограничивает хранилище')}};
+const save=()=>{
+ let stored=false;
+ try{localStorage.setItem(KEY,JSON.stringify(state));stored=true}
+ catch(e){
+   console.error('Planner local save failed:',e);
+   const quota=e&&(e.name==='QuotaExceededError'||e.code===22||e.code===1014);
+   notify(quota?'Не хватает места для сохранения. Не очищай данные сайта до резервной копии.':'Ошибка локального сохранения: '+(e&&e.name?e.name:'неизвестная причина'));
+ }
+ if(stored&&typeof window.queueCloudSave==='function'){
+   try{window.queueCloudSave()}catch(e){console.error('Planner cloud queue failed:',e);notify('Локально сохранено, но возникла ошибка облачной синхронизации')}
+ }
+ return stored;
+};
 if(!localStorage.getItem(KEY)||dermDailyChanged)save();
 function ensureDay(date){if(state.tasks.some(t=>t.date===date))return;if(date>=START&&date<=END)return;const d=parseDate(date),w=d.getDay();state.tasks.push(task(date,'Искусство речи','Русская речь','Русская речь — 15 минут',15,'Монолог, активный словарь, разбор ошибок'));state.tasks.push(task(date,'Физическая форма','Гимнастика','Утренняя гимнастика + гибкость + шпагат',15,'Один ежедневный комплекс'));state.tasks.push(task(date,'Физическая форма','Активность','7 000+ шагов (ориентир)',0,'Посильная ходьба'));state.tasks.push(task(date,'Шахматы','Практика','Шахматные задачи — 10 минут',10,'Тактические задачи и повторение'));state.tasks.push(task(date,'Кругозор','Ежедневная задача','Кругозор за 5 минут',5,'По существующей ежедневной задаче'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Английский','General English','Английский — занятие по текущему плану',[5,6].includes(w)?60:30,'Заполнить по очередному месячному плану'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Медицина','Общая медицина и USMLE','Медицина — тема по плану',120,'Тему уточнить после получения материалов'));if([2,4,6].includes(w))state.tasks.push(task(date,'Медицина','Сердечно-сосудистая хирургия','ССХ — тема по плану',120,'Подставить следующую главу программы'));if([0,1].includes(w))state.tasks.push(task(date,'Искусство речи','Чеченский язык','Чеченский — занятие по тексту',30,'Чтение и пересказ'));if([3,5].includes(w))state.tasks.push(task(date,'Шахматы','Основное занятие','Шахматы — основное занятие',30,'Тема по текущему этапу'));save()}
 const byDate=s=>state.tasks.filter(t=>t.date===s);
