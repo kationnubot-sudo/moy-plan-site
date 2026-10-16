@@ -331,3 +331,246 @@ hr{border-color:#464751}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{animation:none!important;transition:none!important}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MIDNIGHT PREMIUM · COLOR LIFT / 2026-10-16
+   More breathing room, cooler cobalt, lilac, muted gold and sage.
+   Purely visual. Remove this section to restore the dark original.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#222632;
+  --panel:#303442;
+  --ink:#f5f2f1;
+  --muted:#b8bbcb;
+  --border:#444a59;
+  --accent:#c1aff0;
+  --light:#46445d;
+  --good:#84dac2;
+  --shadow:0 12px 32px rgba(8,12,27,.13),0 2px 6px rgba(8,12,27,.09);
+}
+html{background:#222632}
+body{
+  background:
+    radial-gradient(ellipse 720px 530px at 97% -8%,rgba(126,111,185,.22),transparent 77%),
+    radial-gradient(ellipse 560px 600px at 20% 105%,rgba(71,131,164,.09),transparent 80%),
+    #222632;
+}
+.sidebar{
+  background:linear-gradient(180deg,#282c3b 0%,#252935 59%,#252934 100%);
+  border-right-color:#414658;
+}
+.logo{border-bottom-color:#404559}
+.logo-mark{
+  background:linear-gradient(145deg,#514760,#535f7d);
+  color:#f0d4a7;
+  box-shadow:0 8px 23px rgba(11,12,25,.17),inset 0 1px rgba(255,255,255,.12);
+}
+.nav button{color:#c8c7d6}
+.nav button .sym{background:#34384c;color:#c8bce8}
+.nav button:hover{background:#383d52;color:#fff}
+.nav button:hover .sym{background:#494c65;color:#f5e5c8}
+.nav button.active{
+  background:linear-gradient(104deg,#605779,#514b73);
+  border-color:#8075a3;color:#fffaf2;
+  box-shadow:inset 3px 0 0 #e1bd87,0 8px 18px rgba(20,18,42,.14);
+}
+.nav button.active .sym{background:rgba(255,255,255,.12);color:#f7dcb4}
+.cloud-panel{
+  background:linear-gradient(155deg,#353b52,#333848);
+  border-color:#515872;
+}
+.cloud-panel p{color:#c4c4d4}
+.cloud-panel .btn{background:#414658;border-color:#626880;color:#efedfa}
+.cloud-panel .btn:hover{background:#515674;border-color:#9e91c9}
+.cloud-panel .btn.primary{background:#c8b9f3;border-color:#c8b9f3;color:#29243c}
+.side-bottom{background:linear-gradient(160deg,#353344,#333c4b);border-color:#565165}
+.side-bottom strong{color:#f0d8b2}
+.side-bottom p{color:#cbc3d3}
+.side-bottom .btn{background:#434257;border-color:#67647e;color:#f4e8cf}
+
+.top{
+  background:linear-gradient(116deg,#35425b 0%,#41445f 49%,#5a4866 100%);
+  border-color:#655c7c;
+  box-shadow:0 17px 40px rgba(17,19,43,.19);
+}
+.top:before{
+  border-color:rgba(246,214,174,.21);
+  box-shadow:0 0 0 43px rgba(245,222,201,.052),0 0 0 105px rgba(243,206,176,.03);
+}
+.top:after{background:#a99ad9;opacity:.27}
+.eyebrow{color:#f0d4ae}
+.sub{color:#e0ddea}
+.top-actions .btn{
+  background:rgba(238,234,255,.1);border-color:rgba(226,215,255,.31);color:#fff9fc;
+}
+.top-actions .btn:hover{background:rgba(238,234,255,.19)}
+.top-actions .btn.primary{background:#f0d7ac;border-color:#f0d7ac;color:#373049}
+.top-actions .btn.primary:hover{background:#ffebc7;border-color:#ffebc7}
+
+.stat,.card{background:#303442;border-color:#454a5b}
+.stat:first-child{
+  background:linear-gradient(132deg,#51445e,#61506c);
+  border-color:#7a6588;box-shadow:0 12px 28px rgba(28,19,45,.12);
+}
+.stat:first-child .number{color:#ffe5bc}
+.stat:first-child .muted{color:#f2dabf}
+.stat:first-child .secondary{color:#ead8e2}
+.stat:nth-child(2){
+  background:linear-gradient(150deg,#34405a,#37415a 95%);
+  border-color:#505d7d;
+}
+.stat:nth-child(2) .number{color:#ccd9ff}
+.stat:nth-child(2) .muted{color:#d1d9ec}
+.stat:nth-child(2) .secondary{color:#b9c7e0}
+.stat:nth-child(3){
+  background:linear-gradient(150deg,#304947,#35504b 95%);
+  border-color:#4d756a;
+}
+.stat:nth-child(3) .number{color:#a4ead1}
+.stat:nth-child(3) .muted{color:#c5eadc}
+.stat:nth-child(3) .secondary{color:#b6d8cc}
+.stat:nth-child(4){
+  background:linear-gradient(150deg,#514437,#564639 95%);
+  border-color:#796450;
+}
+.stat:nth-child(4) .number{color:#f7dcaf}
+.stat:nth-child(4) .muted{color:#e9d5b9}
+.stat:nth-child(4) .secondary{color:#e4cdb2}
+
+.btn{background:#3e4353;border-color:#606477;color:#f2f0f7}
+.btn:hover{background:#4b5065;border-color:#80799e}
+.btn.primary{background:#c2b3f0;border-color:#c2b3f0;color:#2a293d}
+.btn.primary:hover{background:#ddd0ff;border-color:#ddd0ff}
+.tinyarrow,.daycontrols input,.daycontrols input[type=date]{
+  background:#3a3f51;border-color:#565d72;color:#f5f3fa;
+}
+.tinyarrow:hover{background:#4b5066;border-color:#8c84ac}
+.card-header .caption,.caption{color:#c2c1d0}
+.section-title{color:#faf5f7}
+.daypill{background:#353a4b;border-color:#4b5063}
+.daypill:hover{background:#41465c;border-color:#9d8ec0}
+.daypill .wd{color:#bfc2d8}
+.daypill .dt{color:#f5f0f8}
+.daypill.selected{
+  background:linear-gradient(170deg,#5c5379,#4c536f);
+  border-color:#ab9fdb;
+  box-shadow:inset 0 0 0 1px rgba(220,214,252,.13),0 6px 12px rgba(17,19,36,.12);
+}
+.daypill.selected .wd{color:#e2d9fb}
+.daypill.selected .dt{color:#fff2d9}
+.daypill.selected .dot{background:#efd5ab}
+.line{background:#474b5d}
+.line>div{background:linear-gradient(90deg,#9f8fe1,#ccb4ec)}
+.line.good>div{background:linear-gradient(90deg,#67c7ac,#b0ecd3)}
+
+.task,.task:last-child{background:#343a4a;border-color:#4b5264}
+.task:hover{background:#3d4557;border-color:#857daa}
+.task.done{background:#304b47;border-color:#507970}
+.task-name{color:#faf6fa}
+.task-note{color:#c3c3d1}
+.task .tick{background:#3a4052;border-color:#9293ac}
+.task.done .tick{background:#53b998;border-color:#53b998}
+.chip{background:#464b5f;color:#e0dcef}
+.group-title{color:#f6f2fa}
+.group-title small{color:#c7c4d0}
+.task-time-wrapper input{background:#3e4455;border-color:#64697b}
+.task-review-link{background:#464461;border-color:#6f668f;color:#e4d8ff}
+.task-review-link.made{background:#33564c;border-color:#5b8b76;color:#aef3d8}
+
+.pill-date{background:#4a435e;color:#f1d4f3}
+.milestone{border-bottom-color:#4a4d5e}
+.milestone b{color:#fff1e0}
+.milestone span{color:#c9c7d6}
+.bigcta{
+  background:linear-gradient(145deg,#45405b,#39495e);
+  border-color:#656482;
+}
+.bigcta h3{color:#f4d7ad}
+.bigcta p{color:#d1cce0}
+.bigcta .btn{background:#4c4b66;border-color:#7b7194;color:#f4e8f5}
+.note,.mini-info{background:#363c4d;border-color:#4d5870;color:#d1cfdd}
+.daily-notes{border-top-color:#4a4e60}
+.daily-notes textarea{background:#343b4a;border-color:#565e70}
+.daily-notes textarea:focus{background:#3d4456;border-color:#b2a0e3}
+.digest-day-preview{
+  background:linear-gradient(120deg,#3c435d,#463e57);
+  border-color:#656083;
+}
+.digest-pill{background:#534968;color:#f5e5fc}
+.review-chip,.review-rule span{background:#504963;color:#e9dcff}
+.review-chip.ok{background:#36584c;color:#b7f3d9}
+.review-chip.overdue{background:#674651;color:#ffc9bd}
+.review-item{border-bottom-color:#505364}
+.review-main small{color:#c9c6d5}
+
+/* Mini lessons get a distinct personality without becoming neon. */
+.mini-digest-card{background:#363b4c;border-color:#555a6e}
+.mini-digest-card:nth-child(1){
+  background:linear-gradient(170deg,#3b3c53 0%,#373b4c 100%);
+  border-color:#645e83;
+}
+.mini-digest-card:nth-child(2){
+  background:linear-gradient(170deg,#453e50 0%,#393b4c 100%);
+  border-color:#755e76;
+}
+.mini-digest-card:nth-child(3){
+  background:linear-gradient(170deg,#364b52 0%,#363e4d 100%);
+  border-color:#54747c;
+}
+.mini-digest-card:before{background:#c5b0f4;height:4px}
+.mini-digest-card:nth-child(2):before{background:#e5bd9c}
+.mini-digest-card:nth-child(3):before{background:#8dd5d4}
+.mini-digest-card.complete{background:#305049;border-color:#75ae98}
+.mini-digest-card h3{color:#fff8f2}
+.mini-digest-card label{color:#e1dbe9}
+.mini-digest-card input,.mini-digest-card textarea{
+  background:rgba(26,29,42,.45);border-color:#656478;color:#fff9fa;
+}
+.mini-digest-card input:focus,.mini-digest-card textarea:focus{
+  background:#35374a;border-color:#c4b2f2;
+}
+.mini-digest-card .digest-pill{background:#58506c;color:#f1e4ff}
+.digest-review-question{border-bottom-color:#515367}
+.digest-review-question input{background:#3d4253;border-color:#60677d}
+
+/* Richer calendar / week / long-term plans. */
+.plan-step,.block-plan,.week-plan-card,.stage,.weekcol{
+  background:#363b4a;border-color:#4c5266;
+}
+.plan-step:nth-child(3n+1){border-top:2px solid #aaa0dd}
+.plan-step:nth-child(3n+2){border-top:2px solid #85b8d9}
+.plan-step:nth-child(3n){border-top:2px solid #d7b68b}
+.stage{background:#3b4051}
+.stage small,.label-inline{color:#cbc3ff}
+.weekcol.selected{background:#45445e;border-color:#9386b6}
+.weekrow{background:#424657;border-color:#565c70}
+.monthcell{background:#383c4e;border-color:#50576a}
+.monthcell:hover{background:#45485f;border-color:#aba0da}
+.monthcell.selected{background:#56506e;border-color:#b7a9e9}
+.monthcell .date{color:#fff9fa}
+.monthcell .count{color:#dbd5e4}
+.monthcell .dotbar{background:#515469}
+.monthcell .dotbar div{background:#bcb0f2}
+.filter{background:#3a3e50;border-color:#575c70;color:#dfdceb}
+.filter.active{background:#595170;border-color:#a295cb;color:#fff1f6}
+.grade-score{color:#e0c6fa}
+.modalpanel{background:#343849;border-color:#686278}
+.form input,.form textarea,.form select{
+  background:#3b4050;border-color:#63687a;color:#fff9fa;
+}
+.form input:focus,.form textarea:focus,.form select:focus{
+  background:#44485b;border-color:#c7b5f3;
+}
+.review-delete{background:#53404b;border-color:#986473;color:#ffe0dc}
+.notice-reminder{background:#413f58;border-color:#6d638a}
+.reminder-settings input[type=time]{background:#3d4354;border-color:#656b7c}
+.toast{background:#4a475d;border-color:#867aa1}
+.footer{color:#bcb9ca}
+code{background:#4d4a62;color:#f0e4ff}
+@media(max-width:780px){
+ .sidebar{background:linear-gradient(110deg,#2d3040,#292c3b);border-bottom-color:#464b60}
+ .nav button.active{background:#5e5478;border-color:#9181bb}
+ .cloud-panel{background:#353b52;border-color:#585f7b}
+ .stat{background:#303442}
+ .monthcell{background:#383c4e}
+}
