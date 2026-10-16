@@ -7,7 +7,7 @@ let client=null,user=null,revision=0,ready=false,dirty=false,conflict=null,savin
 const prefix='moy_plan_cloud_';
 const status=t=>{if($('cloudStatus'))$('cloudStatus').textContent=t;};
 const show=(id,v)=>{if($(id))$(id).hidden=!v;};
-const backup=(name,value)=>{try{localStorage.setItem(prefix+name+'_'+Date.now(),JSON.stringify(value));}catch(e){}};
+const backup=(name,value)=>{try{const key=prefix+name+'_'+Date.now();localStorage.setItem(key,JSON.stringify(value));}catch(e){console.warn('Аварийная копия не создана: недостаточно места',e)}};
 function refresh(){
 show('cloudSignOut',!!user);show('cloudUpload',!!user&&!ready&&!conflict);show('cloudReload',!!user&&ready&&!conflict);
 show('cloudUseRemote',!!user&&!!conflict);show('cloudKeepLocal',!!user&&!!conflict);
@@ -18,14 +18,14 @@ else if(dirty||saving)status('⟳ Синхронизация…');else status('�
 }
 function apply(payload,rev){
 if(!payload||!Array.isArray(payload.tasks)||!Array.isArray(payload.grades))throw Error('Неверные данные облака');
-backup('before_remote',state);state={...payload,version:6};
+state={...payload,version:6};
 state.reviews=Array.isArray(state.reviews)?state.reviews:[];
 state.digests=state.digests||{};state.digestQuizAnswers=state.digestQuizAnswers||{};
 state.dayNotes=state.dayNotes||{};state.notifications=state.notifications||{};
 state.reviewDeletedSources=state.reviewDeletedSources||[];state.settings={reminderTime:'09:00',...(state.settings||{})};
 if(typeof reconcileDermDailyTasks==='function')reconcileDermDailyTasks();
 revision=Number(rev);ready=true;dirty=false;conflict=null;
-localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem(prefix+'account',user.id);
+try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Локальное хранилище переполнено; данные загружены из облака',e);notify('Облако загружено, но памяти браузера не хватает. Скачай резервную копию.')}localStorage.setItem(prefix+'account',user.id);
 localStorage.setItem(prefix+'dirty','0');localStorage.setItem(prefix+'revision',String(revision));
 if($('reminderTime'))$('reminderTime').value=state.settings.reminderTime;
 render();refresh();
@@ -103,6 +103,14 @@ $('cloudKeepLocal').onclick=async()=>{if(!conflict||!confirm('Перезапис
 backup('remote_backup',conflict.payload);revision=conflict.revision;conflict=null;ready=true;dirty=true;localStorage.setItem(prefix+'dirty','1');await upload();
 };
 $('cloudRetry').onclick=()=>{if(user&&ready){dirty=true;upload();}else notify('Сначала войди и загрузи план');};
+$('cloudClearSnapshots').onclick=()=>{
+ const keys=Object.keys(localStorage).filter(k=>k.startsWith(prefix+'before_remote_')||k.startsWith(prefix+'remote_backup_'));
+ if(!keys.length)return notify('Старых аварийных копий нет');
+ if(!confirm('Удалить '+keys.length+' старых аварийных копий из памяти Safari? Сначала скачай резервную копию. Основной план и данные облака не удаляются.'))return;
+ keys.forEach(k=>localStorage.removeItem(k));
+ if(typeof save==='function')save();
+ notify('Старые аварийные копии очищены');
+};
 $('cloudDownloadSnapshot').onclick=()=>{
 const keys=Object.keys(localStorage).filter(k=>k.startsWith(prefix+'before_remote_')||k.startsWith(prefix+'remote_backup_')).sort();
 if(!keys.length)return notify('Аварийных снимков пока нет');
