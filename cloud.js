@@ -23,6 +23,7 @@ state.reviews=Array.isArray(state.reviews)?state.reviews:[];
 state.digests=state.digests||{};state.digestQuizAnswers=state.digestQuizAnswers||{};
 state.dayNotes=state.dayNotes||{};state.notifications=state.notifications||{};
 state.reviewDeletedSources=state.reviewDeletedSources||[];state.settings={reminderTime:'09:00',...(state.settings||{})};
+if(typeof reconcileDermDailyTasks==='function')reconcileDermDailyTasks();
 revision=Number(rev);ready=true;dirty=false;conflict=null;
 localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem(prefix+'account',user.id);
 localStorage.setItem(prefix+'dirty','0');localStorage.setItem(prefix+'revision',String(revision));
