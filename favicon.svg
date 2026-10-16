@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Мой план">
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#272b3c"/><stop offset="1" stop-color="#50516d"/></linearGradient><linearGradient id="star" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff6df"/><stop offset="1" stop-color="#c7b294"/></linearGradient></defs>
+<rect width="64" height="64" rx="18" fill="url(#bg)"/>
+<path d="M32 11 37.4 26.6 53 32 37.4 37.4 32 53 26.6 37.4 11 32 26.6 26.6Z" fill="url(#star)"/>
+<circle cx="32" cy="32" r="3.3" fill="#303447"/>
+</svg>
