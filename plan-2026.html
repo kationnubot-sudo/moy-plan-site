@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#222632" />
@@ -276,6 +275,24 @@ const DIGEST_TYPES=[
  {key:'cardio',icon:'❤️',name:'Кардиология и сосудистая хирургия',block:'Медицина',subtitle:'Одна короткая выжимка исследования, рекомендаций или клинического принципа.'},
  {key:'horizon',icon:'🌍',name:'Кругозор',block:'Кругозор',subtitle:'Одна познавательная тема, а по воскресеньям — мини-тест.'}
 ];
+
+const BUILTIN_DIGESTS_20261017=[
+{type:'medical',title:'Гиперкалиемия: почему избыток калия опасен для сердца?',text:`Гиперкалиемия — повышение калия сыворотки, обычно выше 5,0–5,5 ммоль/л (границы зависят от лаборатории). Большая часть калия находится внутри клеток, а разность концентраций определяет мембранный потенциал покоя. При росте внеклеточного калия потенциал становится менее отрицательным. При выраженной гиперкалиемии инактивируется часть быстрых натриевых каналов, замедляется проведение импульса. На ЭКГ могут появляться заострённые T, удлинение PR, исчезновение P и расширение QRS, но типичные признаки встречаются не всегда. Причины: почечная недостаточность, лекарства (например, спиронолактон и ингибиторы АПФ), массивное повреждение тканей. При опасных ЭКГ-изменениях внутривенный кальций стабилизирует миокард, но не снижает калий. Инсулин с глюкозой временно перемещает калий в клетки; выведение калия из организма обеспечивают другие методы, при необходимости диализ. Клинический пример: пациент с ХБП, K⁺ 7,2 ммоль/л, ЧСС 42/мин и широкими QRS нуждается в немедленной помощи и мониторинге.`,question:'1. Почему замедляется проведение импульса? 2. Зачем кальций, если он не снижает K⁺? 3. Как временно переместить и как вывести калий?',source:''},
+{type:'cardio',title:'Сердечный выброс и перфузия органов',text:`Сердечный выброс (CO) — объём крови, выбрасываемый сердцем за минуту: CO = HR × SV, где HR — ЧСС, SV — ударный объём. Например, 75/мин × 70 мл = 5250 мл/мин, или 5,25 л/мин. Сердечный выброс и артериальное давление — разные показатели. Среднее артериальное давление приближённо описывается как MAP ≈ CO × SVR (если пренебречь давлением в правом предсердии), где SVR — системное сосудистое сопротивление. При снижении выброса организм активирует симпатическую нервную систему, сосуды сужаются и давление может временно оставаться нормальным, хотя ткани уже испытывают гипоперфузию. Поэтому важно оценивать не только АД, но и сознание, температуру конечностей, диурез, капиллярное наполнение и при необходимости лактат. Пример: АД 110/70 мм рт. ст. на фоне холодных конечностей, спутанности сознания и диуреза 15 мл/ч не исключает серьёзное нарушение кровообращения.`,question:'1. От чего зависит сердечный выброс? 2. Почему АД может быть нормальным при низком выбросе? 3. Назови три признака гипоперфузии.',source:''},
+{type:'horizon',title:'Почему Венера горячее Меркурия?',text:`Меркурий расположен ближе всего к Солнцу, но средняя температура его поверхности около +167 °C, а поверхность Венеры нагрета примерно до +465 °C. У Меркурия практически нет плотной атмосферы, удерживающей тепло: днём температура может достигать +430 °C, ночью опускаться до −180 °C. У Венеры чрезвычайно плотная атмосфера, примерно на 96,5% состоящая из углекислого газа. Она затрудняет уход инфракрасного излучения в космос и создаёт мощный парниковый эффект. Давление на поверхности Венеры приблизительно в 92 раза выше земного; температура остаётся очень высокой как днём, так и ночью. Следовательно, расстояние до Солнца — не единственный фактор: состав и плотность атмосферы также определяют температуру планеты.`,question:'1. Почему Меркурий охлаждается ночью? 2. Какой газ вызывает мощный парниковый эффект Венеры? 3. Почему на Венере почти нет суточного перепада температуры?',source:''}
+];
+function installBuiltinDigests(){
+ if(!state.digests||typeof state.digests!=='object')state.digests={};
+ let changed=false;
+ for(const item of BUILTIN_DIGESTS_20261017){
+  const id='digest:2026-10-17:'+item.type;
+  if(state.digests[id]&&state.digests[id].title&&state.digests[id].text)continue;
+  state.digests[id]={...state.digests[id],date:'2026-10-17',type:item.type,title:item.title,text:item.text,question:item.question,source:item.source,done:!!state.digests[id]?.done};
+  changed=true;
+ }
+ return changed;
+}
+
 const digestId=(date,type)=>'digest:'+date+':'+type;
 function getDigest(date,type){return state.digests[digestId(date,type)]||{title:'',text:'',question:'',source:'',answer:'',done:false}}
 function saveDigestFields(date,type,card){const id=digestId(date,type),old=getDigest(date,type);
@@ -344,7 +361,7 @@ const save=()=>{
  }
  return stored;
 };
-if(!localStorage.getItem(KEY)||dermDailyChanged)save();
+const builtinDigestsChanged=installBuiltinDigests();if(!localStorage.getItem(KEY)||dermDailyChanged||builtinDigestsChanged)save();
 function ensureDay(date){if(state.tasks.some(t=>t.date===date))return;if(date>=START&&date<=END)return;const d=parseDate(date),w=d.getDay();state.tasks.push(task(date,'Искусство речи','Русская речь','Русская речь — 15 минут',15,'Монолог, активный словарь, разбор ошибок'));state.tasks.push(task(date,'Физическая форма','Гимнастика','Утренняя гимнастика + гибкость + шпагат',15,'Один ежедневный комплекс'));state.tasks.push(task(date,'Физическая форма','Активность','7 000+ шагов (ориентир)',0,'Посильная ходьба'));state.tasks.push(task(date,'Шахматы','Практика','Шахматные задачи — 10 минут',10,'Тактические задачи и повторение'));state.tasks.push(task(date,'Кругозор','Ежедневная задача','Кругозор за 5 минут',5,'По существующей ежедневной задаче'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Английский','General English','Английский — занятие по текущему плану',[5,6].includes(w)?60:30,'Заполнить по очередному месячному плану'));if([1,2,3,4,5,6].includes(w))state.tasks.push(task(date,'Медицина','Общая медицина и USMLE','Медицина — тема по плану',120,'Тему уточнить после получения материалов'));if([2,4,6].includes(w))state.tasks.push(task(date,'Медицина','Сердечно-сосудистая хирургия','ССХ — тема по плану',120,'Подставить следующую главу программы'));if([0,1].includes(w))state.tasks.push(task(date,'Искусство речи','Чеченский язык','Чеченский — занятие по тексту',30,'Чтение и пересказ'));if([3,5].includes(w))state.tasks.push(task(date,'Шахматы','Основное занятие','Шахматы — основное занятие',30,'Тема по текущему этапу'));save()}
 const byDate=s=>state.tasks.filter(t=>t.date===s);
 const percent=(a)=>a.length?Math.round(100*a.filter(t=>t.done).length/a.length):0;
@@ -402,6 +419,6 @@ ensureDay(selected);render();checkBrowserReminders();
 <div class="modal" id="cloudModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Облачный аккаунт</h2><button class="ico" id="cloudModalClose" type="button" aria-label="Закрыть">✕</button></div><div class="form"><p class="caption">Для синхронизации нужен настроенный проект Supabase (см. README_CLOUD.md). После регистрации при необходимости подтвердите email.</p><label for="cloudEmail">Email</label><input id="cloudEmail" type="email" autocomplete="username" placeholder="you@example.com"/><label for="cloudPassword">Пароль</label><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Не менее 6 символов"/><div class="modalbuttons"><button class="btn" type="button" id="cloudRegister">Создать аккаунт</button><button class="btn primary" type="button" id="cloudLogin">Войти</button></div><div class="note">Не вставляйте здесь ключи OpenAI или закрытые ключи Supabase. Сервисное подключение настраивается отдельно.</div></div></div></div>
 <script src="./config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./cloud.js?v=20261017-7"></script>
+<script src="./cloud.js?v=20261017-9"></script>
 </body>
 </html>
