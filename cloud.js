@@ -24,6 +24,7 @@ state.digests=state.digests||{};state.digestQuizAnswers=state.digestQuizAnswers|
 state.dayNotes=state.dayNotes||{};state.notifications=state.notifications||{};
 state.reviewDeletedSources=state.reviewDeletedSources||[];state.settings={reminderTime:'09:00',...(state.settings||{})};
 if(typeof reconcileDermDailyTasks==='function')reconcileDermDailyTasks();
+if(typeof installBuiltinDigests==='function')installBuiltinDigests();
 revision=Number(rev);ready=true;dirty=false;conflict=null;
 try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Локальное хранилище переполнено; данные загружены из облака',e);notify('Облако загружено, но памяти браузера не хватает. Скачай резервную копию.')}localStorage.setItem(prefix+'account',user.id);
 localStorage.setItem(prefix+'dirty','0');localStorage.setItem(prefix+'revision',String(revision));
