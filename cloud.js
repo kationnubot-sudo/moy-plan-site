@@ -117,6 +117,26 @@ const keys=Object.keys(localStorage).filter(k=>k.startsWith(prefix+'before_remot
 if(!keys.length)return notify('Аварийных снимков пока нет');
 const k=keys[keys.length-1];download(JSON.parse(localStorage.getItem(k)),'moy-plan-snapshot.json');
 };
+
+window.pullChatGrades=async()=>{
+ if(!client||!user){notify('Сначала войди в облачный аккаунт планера');return}
+ const btn=$('pullChatGrades');if(btn){btn.disabled=true;btn.textContent='⟳ Загружаю оценки…'}
+ try{
+  const {data,error}=await client.from('chatgpt_grade_inbox').select('id,grade_date,block,title,score,feedback,imported_at').eq('user_id',user.id).is('imported_at',null).order('created_at',{ascending:true});
+  if(error)throw error;
+  if(!data?.length){notify('Новых оценок из ChatGPT пока нет');return}
+  let count=0;
+  for(const g of data){
+   const gid='chatgpt-grade-'+g.id;
+   if(!state.grades.some(x=>x.id===gid)){state.grades.push({id:gid,date:g.grade_date,block:g.block,title:g.title,score:g.score,feedback:g.feedback});count++}
+  }
+  save();
+  const {error:ackError}=await client.from('chatgpt_grade_inbox').update({imported_at:new Date().toISOString()}).in('id',data.map(g=>g.id)).eq('user_id',user.id);
+  if(ackError)console.warn('Не удалось отметить импорт оценок',ackError);
+  switchView('grades');notify('Загружено оценок: '+count);
+ }catch(e){console.error(e);notify('Ошибка загрузки оценок: '+e.message)}
+ finally{if(btn){btn.disabled=false;btn.textContent='↻ Забрать оценки из ChatGPT'}}
+};
 refresh();
 if(/^https:\/\/[\w.-]+\.supabase\.co\/?$/.test(cfg.url||'') && (cfg.publishableKey||'').length>15 && window.supabase?.createClient){
 client=window.supabase.createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
