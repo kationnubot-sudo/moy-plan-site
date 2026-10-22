@@ -85,7 +85,13 @@ if(!email||password.length<6)return notify('Нужны email и пароль о�
 try{const {data,error}=create?await client.auth.signUp({email,password}):await client.auth.signInWithPassword({email,password});
 if(error)throw error;$('cloudPassword').value='';$('cloudModal').classList.remove('open');
 notify(create&&!data.session?'Проверь почту и подтверди регистрацию':'Вход выполнен');
-}catch(e){status('Ошибка входа: '+e.message);}
+}catch(e){
+const raw=String(e.message||e);
+if(/rate limit|too many requests/i.test(raw))status('Supabase временно ограничил отправку писем. Не повторяй регистрацию подряд; подожди сброса лимита. Локальные данные остаются на устройстве.');
+else if(/invalid login credentials/i.test(raw))status('Неверный email или пароль. Если аккаунта ещё нет, выбери «Создать аккаунт».');
+else if(/email not confirmed/i.test(raw))status('Подтверди email по письму Supabase. Не создавай аккаунт повторно.');
+else status('Ошибка входа: '+raw);
+}
 }
 $('cloudLogin').onclick=()=>auth(false);$('cloudRegister').onclick=()=>auth(true);
 $('cloudSignOut').onclick=async()=>{
