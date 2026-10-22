@@ -114,19 +114,19 @@
 </main>
 </div>
 <div class="modal" id="digestImportModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Импорт мини-тем</h2><button class="ico" data-close="digestImportModal" aria-label="Закрыть">✕</button></div>
- <div class="form"><p class="caption">Вставь JSON с полями date, items: [{type, title, text, question, source}]. Типы: medical, cardio, horizon. Можно импортировать один или три выпуска за дату. Уже сохранённый ответ и отметка «изучено» останутся, если обновить текст.</p><textarea id="digestImportJson" style="min-height:210px" placeholder='{"date":"2026-10-16","items":[{"type":"medical","title":"Название","text":"Короткое объяснение","question":"Вопрос?"}]}'></textarea><div class="modalbuttons"><button class="btn primary" id="digestImportBtn" type="button">Импортировать</button></div></div></div></div>
+ <div class="form"><p class="caption">Вставь JSON с полями date, items: [{type, title, text, question, source}]. Типы: medical, cardio, horizon. Можно импортировать один или три выпуска за дату. Уже сохранённый ответ и отметка «изучено» останутся, если обновить текст.</p><textarea id="digestImportJson" style="min-height:210px" placeholder='{"date":"2026-10-22","items":[{"type":"medical","title":"Название","text":"Короткое объяснение","question":"Вопрос?"}]}'></textarea><div class="modalbuttons"><button class="btn primary" id="digestImportBtn" type="button">Импортировать</button></div></div></div></div>
 <div class="modal" id="taskModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2 id="taskModalTitle">Новая задача</h2><button class="ico" data-close="taskModal" aria-label="Закрыть">✕</button></div><form class="form" id="taskForm"><div class="twocol"><div><label for="taskDate">Дата</label><input type="date" id="taskDate" required/></div><div><label for="taskBlock">Блок</label><select id="taskBlock"></select></div></div><div><label for="taskSection">Раздел (необязательно)</label><input id="taskSection" maxlength="100" placeholder="Например, Сердечно-сосудистая хирургия"/></div><div><label for="taskName">Название задания</label><input id="taskName" maxlength="180" required placeholder="Изучить строение перикарда"/></div><div><label for="taskNote">Описание / источник</label><textarea id="taskNote" placeholder="Что прочитать, какие задания выполнить, что повторить"></textarea></div><div class="twocol"><div><label for="taskStartTime">Время начала (по желанию)</label><input id="taskStartTime" type="time" /></div><div><label for="taskMinutes">Продолжительность, минут</label><input id="taskMinutes" type="number" min="0" max="600" value="30"/></div></div><div><label for="taskPriority">Приоритет</label><select id="taskPriority"><option value="normal">Обычный</option><option value="high">Важный</option></select></div><div class="modalbuttons"><button type="button" class="btn" data-close="taskModal">Отмена</button><button type="submit" class="btn primary">Сохранить задачу</button></div></form></div></div>
 <div class="modal" id="gradeModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Добавить оценку</h2><button class="ico" data-close="gradeModal">✕</button></div><form class="form" id="gradeForm"><div class="twocol"><div><label for="gradeDate">Дата</label><input type="date" id="gradeDate" required/></div><div><label for="gradeBlock">Блок</label><select id="gradeBlock"></select></div></div><div><label for="gradeTitle">Тема / экзамен</label><input id="gradeTitle" required placeholder="Например, Перикард и топография сердца"/></div><div><label for="gradeScore">Оценка /100</label><input id="gradeScore" type="number" min="0" max="100" required/></div><div><label for="gradeFeedback">Ошибки и что повторить</label><textarea id="gradeFeedback" placeholder="Слабые места и дальнейшие задания"></textarea></div><div class="modalbuttons"><button class="btn" type="button" data-close="gradeModal">Отмена</button><button class="btn primary" type="submit">Сохранить оценку</button></div></form></div></div>
-<div class="modal" id="importModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Импорт ежедневного плана</h2><button class="ico" data-close="importModal">✕</button></div><div class="form"><div class="note">Отправь ChatGPT запрос из кнопки «Скопировать запрос», затем вставь сюда JSON из ответа. Поддерживается один день или несколько дней.</div><label for="importJson">JSON-план</label><textarea id="importJson" style="min-height:205px" spellcheck="false" placeholder='{"date":"2026-10-19","tasks":[{"block":"Медицина","section":"Общая медицина","title":"Псориаз: патогенез и диагностика","minutes":120,"startTime":"18:00","details":"Разобрать и решить 3 задачи"}]}'></textarea><label style="display:flex;gap:8px;align-items:center;font-weight:500"><input id="replaceDateTasks" type="checkbox" style="width:auto"/> Заменить существующие задания для импортированных дат (включая отметки выполнения)</label><div class="modalbuttons"><button class="btn" data-close="importModal">Отмена</button><button class="btn primary" id="importJsonBtn">Импортировать план</button></div></div></div></div>
+<div class="modal" id="importModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Импорт ежедневного плана</h2><button class="ico" data-close="importModal">✕</button></div><div class="form"><div class="note">Отправь ChatGPT запрос из кнопки «Скопировать запрос», затем вставь сюда JSON из ответа. Поддерживается один день или несколько дней.</div><label for="importJson">JSON-план</label><textarea id="importJson" style="min-height:205px" spellcheck="false" placeholder='{"date":"2026-10-25","tasks":[{"block":"Медицина","section":"Общая медицина","title":"Псориаз: патогенез и диагностика","minutes":120,"startTime":"18:00","details":"Разобрать и решить 3 задачи"}]}'></textarea><label style="display:flex;gap:8px;align-items:center;font-weight:500"><input id="replaceDateTasks" type="checkbox" style="width:auto"/> Заменить существующие задания для импортированных дат (включая отметки выполнения)</label><div class="modalbuttons"><button class="btn" data-close="importModal">Отмена</button><button class="btn primary" id="importJsonBtn">Импортировать план</button></div></div></div></div>
 <div class="modal" id="reviewTopicModal" role="dialog" aria-modal="true"><div class="modalpanel"><div class="modalheader"><h2>Добавить изученную тему</h2><button class="ico" data-close="reviewTopicModal" aria-label="Закрыть">✕</button></div><form id="reviewTopicForm" class="form"><div><label for="reviewTopicTitle">Название темы</label><input id="reviewTopicTitle" placeholder="Например, Клапаны сердца" maxlength="180" required/></div><div class="twocol"><div><label for="reviewTopicDate">Когда изучена</label><input id="reviewTopicDate" type="date" required /></div><div><label for="reviewTopicBlock">Блок</label><select id="reviewTopicBlock"></select></div></div><div><label for="reviewTopicSection">Раздел (необязательно)</label><input id="reviewTopicSection" placeholder="Например, Анатомия сердца" maxlength="100"/></div><div class="note">Будут созданы семь повторений от даты изучения. Если срок уже прошёл, проверка будет отмечена как просроченная, пока ты её не выполнишь.</div><div class="modalbuttons"><button type="button" class="btn" data-close="reviewTopicModal">Отмена</button><button class="btn primary" type="submit">Создать повторения</button></div></form></div></div>
 <div class="toast" id="toast"></div>
 <script src="./derm-plan.js?v=20261017-3"></script>
 <script>
 'use strict';
-const START='2026-10-16',END='2026-11-15',COURSE_END='2027-04-13',KEY='planner_v3_2026',DOW=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const START='2026-10-22',END='2026-11-21',COURSE_END='2027-04-19',KEY='planner_v3_2026',DOW=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 const DERM_DETAILED=(window.DERM_DAILY_PLAN||[]).flatMap(day=>day[4].map((entry,i)=>({date:day[1],section:'Дерматовенерология · Этап '+day[2]+' · '+day[3],title:entry[1],details:'Уровень '+entry[0]+' · '+day[3]+'. Полный план: раздел «Дерматовенерология».',minutes:entry[0]==='A'?35:entry[0]==='B'?25:15,id:'derm-v2-'+day[1]+'-'+i,block:'Медицина',priority:'high',done:false,startTime:'',source:'derm-v2-2026'})));
 const BLOCKS=[{name:'Медицина',icon:'🩺'},{name:'Английский',icon:'🇬🇧'},{name:'Искусство речи',icon:'🎙️'},{name:'Физическая форма',icon:'🏃'},{name:'Шахматы',icon:'♟️'},{name:'Кругозор',icon:'🌍'}];
-const MILESTONES=[{date:'2026-10-31',title:'Дерматовенерология',sub:'Все 8 университетских занятий + оценка /100'},{date:'2026-11-10',title:'USMLE — дерматология',sub:'Bootcamp, Pathoma, First Aid + проверка'},{date:'2026-11-15',title:'Контроль первого месяца',sub:'Анатомия сердца, английский, речь, шахматы'}];
+const MILESTONES=[{date:'2026-11-06',title:'Дерматовенерология',sub:'Все 8 университетских занятий + оценка /100'},{date:'2026-11-16',title:'USMLE — дерматология',sub:'Bootcamp, Pathoma, First Aid + проверка'},{date:'2026-11-21',title:'Контроль первого месяца',sub:'Анатомия сердца, английский, речь, шахматы'}];
 const $=id=>document.getElementById(id);
 const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const parseDate=s=>new Date(`${s}T12:00:00`);
@@ -142,23 +142,23 @@ function seed(){
  const result=[];const add=(...args)=>result.push(task(...args));
  const derm={};
  const usmle={
- '2026-11-01':['USMLE: кожа — основы','Bootcamp: структура и функции кожи; параллельно старт урологии'],
- '2026-11-02':['USMLE: воспалительные заболевания','Bootcamp: воспалительные дерматозы; основы урологического анамнеза'],
- '2026-11-03':['USMLE: опухоли и морфология','Bootcamp: основные патологические процессы; урологический осмотр'],
- '2026-11-04':['USMLE: Pathoma I','Гистологические механизмы и воспалительные паттерны; общий анализ мочи'],
- '2026-11-05':['USMLE: Pathoma II','Новообразования кожи, патогенез; основы УЗИ мочевых путей'],
- '2026-11-06':['USMLE: Pathoma III','Разбор сложных механизмов и мини-кейсов; обзор урологических жалоб'],
- '2026-11-07':['USMLE: First Aid I','Структурирование дерматологических тем; основы урологической диагностики'],
- '2026-11-08':['USMLE: First Aid II','Основные отличия заболеваний, карточки, урологические вопросы'],
- '2026-11-09':['USMLE: вопросы','Смешанные вопросы по коже, разбор ошибок и повторение'],
- '2026-11-10':['Проверка USMLE по дерматологии','Итоговая оценка /100; темы для повторения']
+ '2026-11-07':['USMLE: кожа — основы','Bootcamp: структура и функции кожи; параллельно старт урологии'],
+ '2026-11-08':['USMLE: воспалительные заболевания','Bootcamp: воспалительные дерматозы; основы урологического анамнеза'],
+ '2026-11-09':['USMLE: опухоли и морфология','Bootcamp: основные патологические процессы; урологический осмотр'],
+ '2026-11-10':['USMLE: Pathoma I','Гистологические механизмы и воспалительные паттерны; общий анализ мочи'],
+ '2026-11-11':['USMLE: Pathoma II','Новообразования кожи, патогенез; основы УЗИ мочевых путей'],
+ '2026-11-12':['USMLE: Pathoma III','Разбор сложных механизмов и мини-кейсов; обзор урологических жалоб'],
+ '2026-11-13':['USMLE: First Aid I','Структурирование дерматологических тем; основы урологической диагностики'],
+ '2026-11-14':['USMLE: First Aid II','Основные отличия заболеваний, карточки, урологические вопросы'],
+ '2026-11-15':['USMLE: вопросы','Смешанные вопросы по коже, разбор ошибок и повторение'],
+ '2026-11-16':['Проверка USMLE по дерматологии','Итоговая оценка /100; темы для повторения']
  };
  const uro={
- '2026-11-11':['Урология: анатомия и физиология','Почки, мочеточники, мочевой пузырь, уретра; строение и функция'],
- '2026-11-12':['Урология: симптомы и синдромы','Дизурия, гематурия, задержка мочи, почечная колика'],
- '2026-11-13':['Урология: обследование','Сбор анамнеза, осмотр, анализы мочи, УЗИ, показания к визуализации'],
- '2026-11-14':['Урология: первые клинические случаи','Вопросы по мочевым инфекциям и мочекаменной болезни; диагностика'],
- '2026-11-15':['Урология: промежуточный контроль','Проверка начальных тем, работа над ошибками, оценка /100']
+ '2026-11-17':['Урология: анатомия и физиология','Почки, мочеточники, мочевой пузырь, уретра; строение и функция'],
+ '2026-11-18':['Урология: симптомы и синдромы','Дизурия, гематурия, задержка мочи, почечная колика'],
+ '2026-11-19':['Урология: обследование','Сбор анамнеза, осмотр, анализы мочи, УЗИ, показания к визуализации'],
+ '2026-11-20':['Урология: первые клинические случаи','Вопросы по мочевым инфекциям и мочекаменной болезни; диагностика'],
+ '2026-11-21':['Урология: промежуточный контроль','Проверка начальных тем, работа над ошибками, оценка /100']
  };
  const heart=[
  ['Топография сердца, средостение','Wilcox: ориентиры, положение сердца, взаимоотношения органов'],
@@ -185,7 +185,7 @@ function seed(){
   const n=Math.floor((d-parseDate(START))/86400000),week=Math.min(4,Math.floor(n/7));
   const detail=derm[day]||usmle[day]||uro[day];
   for(const entry of DERM_DETAILED){if(entry.date!==day)continue; const t=task(entry.date,entry.block,entry.section,entry.title,entry.minutes,entry.details,entry.priority); t.id=entry.id; t.startTime=entry.startTime; t.source=entry.source; result.push(t);}
-  if(detail) add(day,'Медицина','Общая медицина и USMLE',detail[0],120,detail[1]+' · Изучение → вопросы → Medical English → Anki',day==='2026-10-31'||day==='2026-11-10'?'high':'normal');
+  if(detail) add(day,'Медицина','Общая медицина и USMLE',detail[0],120,detail[1]+' · Изучение → вопросы → Medical English → Anki',day==='2026-11-06'||day==='2026-11-16'?'high':'normal');
   if([2,4,6].includes(weekday)){
    const h=heart[Math.min(heartIndex,heart.length-1)];heartIndex++;
    add(day,'Медицина','Сердечно-сосудистая хирургия',h[0],120,h[1]+' · Wilcox, анатомические схемы, Medical English, повторение');
@@ -214,13 +214,13 @@ const SIX_BLOCKS=[
  {icon:'♟️',name:'Шахматы',lead:'2×30 мин плюс 10 мин практики ежедневно. Начинаем с нуля, качество важнее рейтинга.',stages:[['Месяц 1','Доска, фигуры и все правила игры.'],['Месяц 2','Тактические мотивы.'],['Месяц 3','Базовые эндшпили.'],['Месяц 4','Дебютные принципы.'],['Месяц 5','Стратегия и планирование.'],['Месяц 6','Расчёт вариантов и анализ партий.']]},
  {icon:'🌍',name:'Развитие кругозора',lead:'Существующая задача «Кругозор за 5 минут» ежедневно в 09:00 по Москве. Без дополнительного учебного курса.',stages:[['Каждый месяц','Короткие факты из разных областей, объяснение, вопросы, возвращение к прошлым темам.']]}
 ];
-const FIRST_DEADLINES=[['2026-10-31','Университетская дерматология','Все 8 занятий и проверка /100'],['2026-11-10','USMLE по коже','Bootcamp, Pathoma, First Aid и тест'],['2026-11-15','Итоги месяца','Урология, анатомия сердца, английский, речь и шахматы']];
+const FIRST_DEADLINES=[['2026-11-06','Университетская дерматология','Все 8 занятий и проверка /100'],['2026-11-16','USMLE по коже','Bootcamp, Pathoma, First Aid и тест'],['2026-11-21','Итоги месяца','Урология, анатомия сердца, английский, речь и шахматы']];
 const FIRST_WEEKS=[
- {date:'16–22 октября',items:[['Общая медицина','Дерматология №1–4: основы кожи, инфекции, псориаз и другие дерматозы, экзема, крапивница.'],['ССХ','Положение сердца, перикард, наружное строение (Wilcox).'],['Английский','Grammar Units 1–2, Vocabulary Unit 1; говорить о себе.'],['Речь и шахматы','Русская речь: ясность; чеченский: первый текст; шахматы: доска и ходы фигур.']]},
- {date:'23–29 октября',items:[['Общая медицина','Дерматология №5–7: контактные и лекарственные реакции, микозы и вирусные болезни, буллёзные заболевания, красная волчанка и склеродермия.'],['ССХ','Правое предсердие и правый желудочек.'],['Английский','Grammar Units 3–4; Vocabulary Unit 5; Present Continuous.'],['Речь и шахматы','Чистота речи; чтение и пересказ; шах, мат, пат.']]},
- {date:'30 октября — 5 ноября',items:[['Общая медицина','30–31.10 — занятие №8: уретриты, сифилис; 31.10 — экзамен по всем 8 занятиям. С 01.11 — USMLE по коже и начало урологии.'],['ССХ','Левые камеры сердца и сравнение с правыми.'],['Английский','Grammar Units 5–6; Vocabulary Unit 8; Present Simple.'],['Речь и шахматы','Активный словарь; собственные предложения; особые шахматные правила.']]},
- {date:'6–12 ноября',items:[['Общая медицина','Pathoma, First Aid, вопросы USMLE по коже до 10.11; начало урологии.'],['ССХ','Перегородки, клапанный аппарат, фиброзный скелет.'],['Английский','Grammar Units 7–8; Vocabulary Unit 9; вопросы и сравнение времён.'],['Речь и шахматы','Связные пересказы и короткие рассказы; первые партии.']]},
- {date:'13–15 ноября',items:[['Медицина','Проверка начальной урологии и анатомии сердца.'],['Английский','Повторение, Speaking, Listening, оценка /100.'],['Искусство речи','Монолог и пересказ текста на чеченском, отдельные оценки.'],['Шахматы и форма','Проверка базовых правил; итоги гимнастики и активности.']]}
+ {date:'22–28 октября',items:[['Общая медицина','Дерматология №1–4: основы кожи, инфекции, псориаз и другие дерматозы, экзема, крапивница.'],['ССХ','Положение сердца, перикард, наружное строение (Wilcox).'],['Английский','Grammar Units 1–2, Vocabulary Unit 1; говорить о себе.'],['Речь и шахматы','Русская речь: ясность; чеченский: первый текст; шахматы: доска и ходы фигур.']]},
+ {date:'29 октября — 4 ноября',items:[['Общая медицина','Дерматология №5–7: контактные и лекарственные реакции, микозы и вирусные болезни, буллёзные заболевания, красная волчанка и склеродермия.'],['ССХ','Правое предсердие и правый желудочек.'],['Английский','Grammar Units 3–4; Vocabulary Unit 5; Present Continuous.'],['Речь и шахматы','Чистота речи; чтение и пересказ; шах, мат, пат.']]},
+ {date:'5–11 ноября',items:[['Общая медицина','30–31.10 — занятие №8: уретриты, сифилис; 31.10 — экзамен по всем 8 занятиям. С 01.11 — USMLE по коже и начало урологии.'],['ССХ','Левые камеры сердца и сравнение с правыми.'],['Английский','Grammar Units 5–6; Vocabulary Unit 8; Present Simple.'],['Речь и шахматы','Активный словарь; собственные предложения; особые шахматные правила.']]},
+ {date:'12–18 ноября',items:[['Общая медицина','Pathoma, First Aid, вопросы USMLE по коже до 10.11; начало урологии.'],['ССХ','Перегородки, клапанный аппарат, фиброзный скелет.'],['Английский','Grammar Units 7–8; Vocabulary Unit 9; вопросы и сравнение времён.'],['Речь и шахматы','Связные пересказы и короткие рассказы; первые партии.']]},
+ {date:'19–21 ноября',items:[['Медицина','Проверка начальной урологии и анатомии сердца.'],['Английский','Повторение, Speaking, Listening, оценка /100.'],['Искусство речи','Монолог и пересказ текста на чеченском, отдельные оценки.'],['Шахматы и форма','Проверка базовых правил; итоги гимнастики и активности.']]}
 ];
 const REVIEW_INTERVALS=[1,3,7,14,30,60,90];
 function eligibleStudy(t){
@@ -286,9 +286,9 @@ function installBuiltinDigests(){
  if(!state.digests||typeof state.digests!=='object')state.digests={};
  let changed=false;
  for(const item of BUILTIN_DIGESTS_20261017){
-  const id='digest:2026-10-17:'+item.type;
+  const id='digest:2026-10-23:'+item.type;
   if(state.digests[id]&&state.digests[id].title&&state.digests[id].text)continue;
-  state.digests[id]={...state.digests[id],date:'2026-10-17',type:item.type,title:item.title,text:item.text,question:item.question,source:item.source,done:!!state.digests[id]?.done};
+  state.digests[id]={...state.digests[id],date:'2026-10-23',type:item.type,title:item.title,text:item.text,question:item.question,source:item.source,done:!!state.digests[id]?.done};
   changed=true;
  }
  return changed;
@@ -336,7 +336,7 @@ function reconcileDermDailyTasks(){
  const oldCount=state.tasks.length;
  const old=state.tasks.filter(t=>t.source==='assistant-derm-full-2026-10'||String(t.id||'').startsWith('derm-full-2026-'));
  const oldDone=new Set(old.filter(t=>t.done).map(t=>t.title.toLowerCase().trim()));
- const obsolete=t=>t.block==='Медицина'&&t.date>='2026-10-17'&&t.date<='2026-11-10'&&(
+ const obsolete=t=>t.block==='Медицина'&&t.date>='2026-10-23'&&t.date<='2026-11-16'&&(
    t.source==='assistant-derm-full-2026-10'||String(t.id||'').startsWith('derm-full-2026-')||
    (t.section==='Общая медицина и USMLE'&&(/^(USMLE:|Проверка USMLE)/.test(t.title)||/дерматолог|дерматовенеролог|кожа/i.test(t.title)))
  );
@@ -414,6 +414,25 @@ $('taskForm').onsubmit=e=>{e.preventDefault();const values={date:$('taskDate').v
 $('reviewTopicForm').onsubmit=e=>{e.preventDefault();const title=$('reviewTopicTitle').value.trim(),startDate=$('reviewTopicDate').value,block=$('reviewTopicBlock').value,section=$('reviewTopicSection').value.trim();if(!title||!startDate)return;scheduleReviews({sourceId:uid(),title,block,section,startDate});save();hideModal('reviewTopicModal');switchView('reviews');notify('Семь повторений добавлены')};
 $('gradeForm').onsubmit=e=>{e.preventDefault();state.grades.push({id:uid(),date:$('gradeDate').value,block:$('gradeBlock').value,title:$('gradeTitle').value.trim(),score:Number($('gradeScore').value),feedback:$('gradeFeedback').value.trim()});save();hideModal('gradeModal');switchView('grades');notify('Оценка сохранена')};
 document.querySelectorAll('[data-close]').forEach(e=>e.onclick=()=>hideModal(e.dataset.close));document.querySelectorAll('.modal').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)hideModal(el.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(el=>hideModal(el.id))});
+// Новый старт: резервная копия создаётся локально и скачивается до обнуления.
+function restartFromOctober22(){
+ if(!confirm('Скачать резервную копию старого прогресса и начать всё с нуля с 22 октября 2026 года?'))return;
+ const old=JSON.parse(JSON.stringify(state));
+ const backup={backupVersion:1,exportedAt:new Date().toISOString(),restartFrom:'2026-10-22',...old};
+ try{localStorage.setItem('planner_backup_before_restart_20261022',JSON.stringify(backup))}
+ catch(e){alert('Не удалось сохранить резервную копию. Освободи место в браузере и повтори.');return}
+ download(backup,'moy-plan-do-perezapuska-2026-10-22.json');
+ state=defaultState();
+ state.restartedAt='2026-10-22';
+ state.dermDailyVersion='derm-v3-2026';
+ selected='2026-10-22';monthCursor='2026-10';view='today';
+ save();render();notify('Новый старт: 22 октября 2026 года');
+}
+const restartButton=document.createElement('button');
+restartButton.className='btn small primary';
+restartButton.textContent='↻ Начать с 22 октября (с резервной копией)';
+restartButton.onclick=restartFromOctober22;
+$('exportBackup').insertAdjacentElement('beforebegin',restartButton);
 $('exportBackup').onclick=()=>{download({backupVersion:1,exportedAt:new Date().toISOString(),...state},'moy-plan-rezerv-'+iso(new Date())+'.json');notify('Резервная копия скачана')};$('importBackup').onclick=()=>$('backupFile').click();$('backupFile').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const obj=JSON.parse(await f.text());if(!Array.isArray(obj.tasks)||!Array.isArray(obj.grades))throw Error('Неверный формат резервной копии');if(!confirm('Заменить текущие задачи и оценки данными из резервной копии?'))return;state={version:6,tasks:obj.tasks,grades:obj.grades,digests:obj.digests||{},digestQuizAnswers:obj.digestQuizAnswers||{},reviews:Array.isArray(obj.reviews)?obj.reviews:[],dayNotes:obj.dayNotes||{},settings:{reminderTime:'09:00',...(obj.settings||{})},notifications:obj.notifications||{},reviewDeletedSources:Array.isArray(obj.reviewDeletedSources)?obj.reviewDeletedSources:[]};$('reminderTime').value=state.settings.reminderTime;save();render();notify('Резервная копия восстановлена')}catch(e){alert('Ошибка восстановления: '+e.message)}finally{e.target.value=''}};
 ensureDay(selected);render();checkBrowserReminders();
 </script>
