@@ -339,7 +339,7 @@ function reconcileDermDailyTasks(){
  const obsolete=t=>(t.source==='derm-v2-2026'||t.source==='derm-exam-2026'||String(t.id||'').startsWith('derm-exam-')||t.source==='derm-v2-2026'||t.block==='Медицина'&&t.date>='2026-10-23'&&t.date<='2026-11-16'&&(
    t.source==='assistant-derm-full-2026-10'||String(t.id||'').startsWith('derm-full-2026-')||
    (t.section==='Общая медицина и USMLE'&&(/^(USMLE:|Проверка USMLE)/.test(t.title)||/дерматолог|дерматовенеролог|кожа/i.test(t.title)))
- );
+ ));
  state.tasks=state.tasks.filter(t=>!obsolete(t));
  const existing=new Set(state.tasks.map(t=>t.id));
  let added=0;
